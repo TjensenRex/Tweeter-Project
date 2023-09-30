@@ -38,16 +38,15 @@ public class FollowService {
         executor.execute(isFollowerTask);
     }
     public void updateSelectedUserFollowingAndFollowers(AuthToken currUserAuthToken, User selectedUser,
-                                                        GetFollowersCountObserver observer1,
-                                                        GetFollowingCountObserver observer2) {
+                                                        GetCountObserver observer1, GetCountObserver observer2) {
         ExecutorService executor = Executors.newFixedThreadPool(2);
         // Get count of most recently selected user's followers.
         GetFollowersCountTask followersCountTask = new GetFollowersCountTask(currUserAuthToken,
-                selectedUser, new GetFollowersCountHandler(observer1));
+                selectedUser, new GetCountHandler(observer1));
         executor.execute(followersCountTask);
         // Get count of most recently selected user's followees (who they are following)
         GetFollowingCountTask followingCountTask = new GetFollowingCountTask(Cache.getInstance().getCurrUserAuthToken(),
-                selectedUser, new GetFollowingCountHandler(observer2));
+                selectedUser, new GetCountHandler(observer2));
         executor.execute(followingCountTask);
     }
     public void follow(AuthToken currUserAuthToken, User selectedUser, ToggleFollowObserver observer) {

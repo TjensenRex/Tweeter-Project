@@ -42,7 +42,7 @@ public class MainActivityPresenter {
                 Cache.getInstance().getCurrUser(), selectedUser, new IsFollowObserver());
     }
     public void logout() {
-        userService.logout(Cache.getInstance().getCurrUserAuthToken(), new logoutObserver());
+        userService.logout(Cache.getInstance().getCurrUserAuthToken(), new LogoutObserver());
     }
     public void updateSelectedUserFollowingAndFollowers(User selectedUser) {
         followService.updateSelectedUserFollowingAndFollowers(Cache.getInstance().getCurrUserAuthToken(),
@@ -63,7 +63,7 @@ public class MainActivityPresenter {
             Status newStatus = new Status(post, Cache.getInstance().getCurrUser(), System.currentTimeMillis(),
                     urls, mentions);
 
-        statusService.post(Cache.getInstance().getCurrUserAuthToken(), newStatus, new postObserver());
+        statusService.post(Cache.getInstance().getCurrUserAuthToken(), newStatus, new PostObserver());
         } catch (Exception ex) {
             Log.e(LOG_TAG, ex.getMessage(), ex);
             view.displayMessage("Failed to post the status because of exception: " + ex.getMessage());
@@ -146,9 +146,9 @@ public class MainActivityPresenter {
             view.displayMessage("Failed to determine following relationship because of exception: " + ex.getMessage());
         }
     }
-    private class logoutObserver implements LogoutObserver {
+    private class LogoutObserver implements AuthenticatedObserver {
         @Override
-        public void logoutSuccess() {
+        public void success() {
             view.logoutSuccess();
         }
         @Override
@@ -160,7 +160,7 @@ public class MainActivityPresenter {
             view.displayMessage("Failed to logout because of exception: " + ex.getMessage());
         }
     }
-    private class FollowerCountObserver implements GetFollowersCountObserver {
+    private class FollowerCountObserver implements GetCountObserver {
         @Override
         public void setCount(int count) {
             view.setFollowerCount(count);
@@ -174,7 +174,7 @@ public class MainActivityPresenter {
             view.displayMessage("Failed to get followers count because of exception: " + ex.getMessage());
         }
     }
-    private class FollowingCountObserver implements GetFollowingCountObserver {
+    private class FollowingCountObserver implements GetCountObserver {
         @Override
         public void setCount(int count) {
             view.setFollowingCount(count);
@@ -228,7 +228,7 @@ public class MainActivityPresenter {
             view.setFollowButton(value);
         }
     }
-    private class postObserver implements PostObserver {
+    private class PostObserver implements AuthenticatedObserver {
         @Override
         public void success() {
             view.postSuccess();

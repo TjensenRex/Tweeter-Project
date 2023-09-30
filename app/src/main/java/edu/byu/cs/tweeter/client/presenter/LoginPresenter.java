@@ -3,7 +3,7 @@ package edu.byu.cs.tweeter.client.presenter;
 import android.widget.EditText;
 import edu.byu.cs.tweeter.client.cache.Cache;
 import edu.byu.cs.tweeter.client.model.service.UserService;
-import edu.byu.cs.tweeter.client.model.service.observer.LoginObserver;
+import edu.byu.cs.tweeter.client.model.service.observer.AuthObserver;
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
 
@@ -32,9 +32,9 @@ public class LoginPresenter {
             throw new IllegalArgumentException("Password cannot be empty.");
         }
     }
-    public class UserServiceObserver implements LoginObserver {
+    public class UserServiceObserver implements AuthObserver {
         @Override
-        public void loginIntent(User loggedInUser, AuthToken authToken) {
+        public void startIntent(User loggedInUser, AuthToken authToken) {
             // Cache user session information
             Cache.getInstance().setCurrUser(loggedInUser);
             Cache.getInstance().setCurrUserAuthToken(authToken);
