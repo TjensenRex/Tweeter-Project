@@ -14,18 +14,15 @@ import androidx.fragment.app.Fragment;
 
 import edu.byu.cs.tweeter.R;
 import edu.byu.cs.tweeter.client.presenter.LoginPresenter;
+import edu.byu.cs.tweeter.client.presenter.viewInterface.AuthenticatingView;
 import edu.byu.cs.tweeter.client.view.main.MainActivity;
 import edu.byu.cs.tweeter.model.domain.User;
 
 /**
  * Implements the login screen.
  */
-public class LoginFragment extends Fragment implements LoginPresenter.View {
+public class LoginFragment extends AuthenticatingView {
     private static final String LOG_TAG = "LoginFragment";
-
-    private Toast loginToast;
-    private EditText alias;
-    private EditText password;
     private TextView errorView;
     private LoginPresenter presenter;
 
@@ -60,8 +57,8 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
                     validateLogin();
                     errorView.setText(null);
 
-                    loginToast = Toast.makeText(getContext(), "Logging In...", Toast.LENGTH_LONG);
-                    loginToast.show();
+                    activityToast = Toast.makeText(getContext(), "Logging In...", Toast.LENGTH_LONG);
+                    activityToast.show();
 
                     // Send the login request.
                     presenter.login(alias.getText().toString(),password.getText().toString());
@@ -76,21 +73,5 @@ public class LoginFragment extends Fragment implements LoginPresenter.View {
 
     public void validateLogin() {
         presenter.validateLogin(alias, password);
-    }
-
-    @Override
-    public void startIntent(User loggedInUser, String name) {
-        Intent intent = new Intent(getContext(), MainActivity.class);
-        intent.putExtra(MainActivity.CURRENT_USER_KEY, loggedInUser);
-
-        loginToast.cancel();
-
-        Toast.makeText(getContext(), "Hello " + name, Toast.LENGTH_LONG).show();
-        startActivity(intent);
-    }
-
-    @Override
-    public void displayMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 }

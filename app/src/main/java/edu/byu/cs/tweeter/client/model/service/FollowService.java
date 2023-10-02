@@ -10,32 +10,28 @@ import edu.byu.cs.tweeter.model.domain.User;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class FollowService {
+public class FollowService extends BaseService {
     public void unfollow(AuthToken currUserAuthToken, User selectedUser, ToggleFollowObserver observer) {
         UnfollowTask unfollowTask = new UnfollowTask(currUserAuthToken, selectedUser,
                 new UnfollowHandler(observer, selectedUser));
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(unfollowTask);
+        executeTask(unfollowTask);
     }
     public void loadMoreItems(AuthToken currUserAuthToken, User user, int pageSize, User lastFollowee,
                               ListObserver<User> observer) {
-        GetFollowingTask getFollowingTask = new GetFollowingTask(currUserAuthToken,
-                user, pageSize, lastFollowee, new GetListHandler<User>(observer));
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(getFollowingTask);
+        GetFollowingTask getFollowingTask = new GetFollowingTask(currUserAuthToken, user, pageSize, lastFollowee,
+                new GetListHandler<User>(observer));
+        executeTask(getFollowingTask);
     }
     public void loadFollowers(AuthToken currUserAuthToken, User user, int pageSize, User lastFollower,
                               ListObserver<User> observer) {
-        GetFollowersTask getFollowersTask = new GetFollowersTask(currUserAuthToken,
-                user, pageSize, lastFollower, new GetListHandler<User>(observer));
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(getFollowersTask);
+        GetFollowersTask getFollowersTask = new GetFollowersTask(currUserAuthToken, user, pageSize, lastFollower,
+                new GetListHandler<User>(observer));
+        executeTask(getFollowersTask);
     }
     public void isFollower(AuthToken currUserAuthToken, User currUser, User selectedUser, IsFollowerObserver observer) {
         IsFollowerTask isFollowerTask = new IsFollowerTask(currUserAuthToken, currUser, selectedUser,
                 new IsFollowerHandler(observer));
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(isFollowerTask);
+        executeTask(isFollowerTask);
     }
     public void updateSelectedUserFollowingAndFollowers(AuthToken currUserAuthToken, User selectedUser,
                                                         GetCountObserver observer1, GetCountObserver observer2) {
@@ -52,7 +48,6 @@ public class FollowService {
     public void follow(AuthToken currUserAuthToken, User selectedUser, ToggleFollowObserver observer) {
         FollowTask followTask = new FollowTask(currUserAuthToken, selectedUser,
                 new FollowHandler(observer, selectedUser));
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(followTask);
+        executeTask(followTask);
     }
 }

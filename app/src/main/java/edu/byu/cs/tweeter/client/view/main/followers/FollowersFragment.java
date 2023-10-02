@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import edu.byu.cs.tweeter.R;
 import edu.byu.cs.tweeter.client.presenter.FollowersPresenter;
+import edu.byu.cs.tweeter.client.presenter.viewInterface.PagedView;
 import edu.byu.cs.tweeter.client.view.main.MainActivity;
 import edu.byu.cs.tweeter.model.domain.User;
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +29,7 @@ import java.util.List;
 /**
  * Implements the "Followers" tab.
  */
-public class FollowersFragment extends Fragment implements FollowersPresenter.View {
+public class FollowersFragment extends PagedView<User> {
     private static final String LOG_TAG = "FollowersFragment";
     private static final String USER_KEY = "UserKey";
     private static final int LOADING_DATA_VIEW = 0;
@@ -75,12 +76,6 @@ public class FollowersFragment extends Fragment implements FollowersPresenter.Vi
 
         return view;
     }
-
-    @Override
-    public void displayMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-    }
-
     @Override
     public void setLoadingFooter(boolean value) {
         if (value) {
@@ -90,16 +85,8 @@ public class FollowersFragment extends Fragment implements FollowersPresenter.Vi
             followersRecyclerViewAdapter.removeLoadingFooter();
         }
     }
-
     @Override
-    public void startIntentActivity(User user) {
-        Intent intent = new Intent(getContext(), MainActivity.class);
-        intent.putExtra(MainActivity.CURRENT_USER_KEY, user);
-        startActivity(intent);
-    }
-
-    @Override
-    public void addFollowers(List<User> followers) {
+    public void addItems(List<User> followers) {
         followersRecyclerViewAdapter.addItems(followers);
     }
 
@@ -254,9 +241,7 @@ public class FollowersFragment extends Fragment implements FollowersPresenter.Vi
          * data.
          */
         void loadMoreItems() {
-            if (!presenter.isLoading()) {   // This guard is important for avoiding a race condition in the scrolling code.
-                presenter.getFollowers(user);
-            }
+            presenter.loadMoreItems(user);
         }
 
         /**

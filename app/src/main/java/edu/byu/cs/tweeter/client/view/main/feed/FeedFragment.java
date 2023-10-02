@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import edu.byu.cs.tweeter.R;
 import edu.byu.cs.tweeter.client.presenter.FeedPresenter;
+import edu.byu.cs.tweeter.client.presenter.viewInterface.PagedView;
 import edu.byu.cs.tweeter.client.view.main.MainActivity;
 import edu.byu.cs.tweeter.model.domain.Status;
 import edu.byu.cs.tweeter.model.domain.User;
@@ -36,7 +37,7 @@ import java.util.List;
 /**
  * Implements the "Feed" tab.
  */
-public class FeedFragment extends Fragment implements FeedPresenter.View {
+public class FeedFragment extends PagedView<Status> {
     private static final String LOG_TAG = "FeedFragment";
     private static final String USER_KEY = "UserKey";
 
@@ -86,19 +87,12 @@ public class FeedFragment extends Fragment implements FeedPresenter.View {
         feedRecyclerViewAdapter.loadMoreItems();
         return view;
     }
-
     @Override
-    public void displayMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void startIntentActivity(User user) {
+    public void startActivity(User user) {
         Intent intent = new Intent(getContext(), MainActivity.class);
         intent.putExtra(MainActivity.CURRENT_USER_KEY, user);
         startActivity(intent);
     }
-
     @Override
     public void setLoadingFooter(boolean value) {
         if (value) {
@@ -108,9 +102,8 @@ public class FeedFragment extends Fragment implements FeedPresenter.View {
             feedRecyclerViewAdapter.removeLoadingFooter();
         }
     }
-
     @Override
-    public void addStatuses(List<Status> statuses) {
+    public void addItems(List<Status> statuses) {
         feedRecyclerViewAdapter.addItems(statuses);
     }
 
@@ -301,8 +294,8 @@ public class FeedFragment extends Fragment implements FeedPresenter.View {
          * Causes the Adapter to display a loading footer and make a request to get more feed
          * data.
          */
-        void loadMoreItems() { //TODO: refactor this!
-            feedPresenter.getFeed(user);
+        void loadMoreItems() {
+            feedPresenter.loadMoreItems(user);
         }
 
         /**

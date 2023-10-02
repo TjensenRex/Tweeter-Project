@@ -27,7 +27,7 @@ import java.text.ParseException;
 /**
  * The main activity for the application. Contains tabs for feed, story, following, and followers.
  */
-public class MainActivity extends AppCompatActivity implements StatusDialogPresenter.Observer, MainActivityPresenter.View {
+public class MainActivity extends AppCompatActivity implements StatusDialogPresenter.StatusDialogueObserver, MainActivityPresenter.View {
     public static final String CURRENT_USER_KEY = "CurrentUser";
     private Toast logOutToast;
     private Toast postingToast;
@@ -186,5 +186,15 @@ public class MainActivity extends AppCompatActivity implements StatusDialogPrese
     public void postSuccess() {
         postingToast.cancel();
         Toast.makeText(MainActivity.this, "Successfully Posted!", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void handleFailure(String message) {
+        this.displayMessage("Failed to post: " + message);
+    }
+
+    @Override
+    public void handleException(Exception exception) {
+        this.displayMessage("Failed to post with exception: " + exception.getMessage());
     }
 }

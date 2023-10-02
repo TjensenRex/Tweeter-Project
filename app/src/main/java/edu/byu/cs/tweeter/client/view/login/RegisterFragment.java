@@ -14,6 +14,7 @@ import android.widget.*;
 import androidx.fragment.app.Fragment;
 import edu.byu.cs.tweeter.R;
 import edu.byu.cs.tweeter.client.presenter.RegisterPresenter;
+import edu.byu.cs.tweeter.client.presenter.viewInterface.AuthenticatingView;
 import edu.byu.cs.tweeter.client.view.main.MainActivity;
 import edu.byu.cs.tweeter.model.domain.User;
 
@@ -23,18 +24,15 @@ import java.util.Base64;
 /**
  * Implements the register screen.
  */
-public class RegisterFragment extends Fragment implements RegisterPresenter.View {
+public class RegisterFragment extends AuthenticatingView {
     private static final String LOG_TAG = "RegisterFragment";
     private static final int RESULT_IMAGE = 10;
     private EditText firstName;
     private EditText lastName;
-    private EditText alias;
-    private EditText password;
     private Button imageUploaderButton;
     private Button registerButton;
     private ImageView imageToUpload;
     private TextView errorView;
-    private Toast registeringToast;
     private RegisterPresenter presenter;
 
     /**
@@ -78,8 +76,8 @@ public class RegisterFragment extends Fragment implements RegisterPresenter.View
                 try {
                     validateRegistration();
                     errorView.setText(null);
-                    registeringToast = Toast.makeText(getContext(), "Registering...", Toast.LENGTH_LONG);
-                    registeringToast.show();
+                    activityToast = Toast.makeText(getContext(), "Registering...", Toast.LENGTH_LONG);
+                    activityToast.show();
 
                     // Convert image to byte array.
                     Bitmap image = ((BitmapDrawable) imageToUpload.getDrawable()).getBitmap();
@@ -113,21 +111,7 @@ public class RegisterFragment extends Fragment implements RegisterPresenter.View
             imageUploaderButton.setText(R.string.afterUploadPicture);
         }
     }
-
     public void validateRegistration() {
         presenter.validateRegistration(firstName, lastName, alias, password, imageToUpload);
-    }
-
-    @Override
-    public void startActivity(User registeredUser, String name) {
-        Intent intent = new Intent(getContext(), MainActivity.class);
-        intent.putExtra(MainActivity.CURRENT_USER_KEY, registeredUser);
-        registeringToast.cancel();
-        Toast.makeText(getContext(), "Hello " + name, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void displayMessage(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 }
