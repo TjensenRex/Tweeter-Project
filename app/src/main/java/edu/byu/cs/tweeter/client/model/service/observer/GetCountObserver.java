@@ -1,5 +1,11 @@
 package edu.byu.cs.tweeter.client.model.service.observer;
 
-public interface GetCountObserver extends ServiceObserver {
-    public void setCount(int count);
+import edu.byu.cs.tweeter.client.presenter.BasePresenter;
+
+public abstract class GetCountObserver extends ServiceObserver {
+    public GetCountObserver(BasePresenter presenter, String verb) {
+        super(presenter, verb);
+    }
+
+    public abstract void setCount(int count);
 }

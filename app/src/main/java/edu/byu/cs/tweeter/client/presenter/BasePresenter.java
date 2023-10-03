@@ -10,4 +10,7 @@ public class BasePresenter {
     BasePresenter(BaseView view) {
         this.view = view;
     }
+    public void displayMessage(String message) {
+        view.displayMessage(message);
+    }
 }

@@ -6,7 +6,7 @@ import edu.byu.cs.tweeter.client.model.service.observer.ServiceObserver;
 import edu.byu.cs.tweeter.client.presenter.viewInterface.BaseView;
 
 public class StatusDialogPresenter extends BasePresenter {
-    public interface StatusDialogueObserver extends ServiceObserver {
+    public interface StatusDialogueObserver {
         void onStatusPosted(String post);
     }
     public interface View extends BaseView { // kept to match the pattern in the others

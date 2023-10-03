@@ -24,12 +24,10 @@ import edu.byu.cs.tweeter.model.domain.User;
 
 import java.text.ParseException;
 
-import static java.security.AccessController.getContext;
-
 /**
  * The main activity for the application. Contains tabs for feed, story, following, and followers.
  */
-public class MainActivity extends AppCompatActivity implements StatusDialogPresenter.StatusDialogueObserver, MainActivityPresenter.View {
+public class MainActivity extends AppCompatActivity implements StatusDialogPresenter.StatusDialogueObserver, MainActivityPresenter.MainView {
     public static final String CURRENT_USER_KEY = "CurrentUser";
     private Toast logOutToast;
     private Toast postingToast;
@@ -136,14 +134,12 @@ public class MainActivity extends AppCompatActivity implements StatusDialogPrese
         presenter.clearCache();
         startActivity(intent);
     }
-
     @Override
     public void onStatusPosted(String post) {
         postingToast = Toast.makeText(this, "Posting Status...", Toast.LENGTH_LONG);
         postingToast.show();
         presenter.post(post);
     }
-
     public String getFormattedDateTime() throws ParseException {
         return presenter.getFormattedDateTime();
     }
@@ -184,19 +180,15 @@ public class MainActivity extends AppCompatActivity implements StatusDialogPrese
         postingToast.cancel();
         Toast.makeText(MainActivity.this, "Successfully Posted!", Toast.LENGTH_LONG).show();
     }
-
-    @Override
-    public void handleFailure(String message) {
-        this.displayMessage("Failed to post: " + message);
-    }
-
-    @Override
-    public void handleException(Exception exception) {
-        this.displayMessage("Failed to post with exception: " + exception.getMessage());
-    }
-
     @Override
     public void displayMessage(String message) {
         Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+    }
+    private class PostObserver implements StatusDialogPresenter.StatusDialogueObserver {
+
+        @Override
+        public void onStatusPosted(String post) {
+
+        }
     }
 }
