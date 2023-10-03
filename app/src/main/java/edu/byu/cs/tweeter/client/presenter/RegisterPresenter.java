@@ -3,22 +3,18 @@ package edu.byu.cs.tweeter.client.presenter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import edu.byu.cs.tweeter.client.cache.Cache;
-import edu.byu.cs.tweeter.client.model.service.UserService;
 import edu.byu.cs.tweeter.client.model.service.observer.AuthObserver;
 import edu.byu.cs.tweeter.client.presenter.viewInterface.AuthenticatingView;
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
 
-public class RegisterPresenter {
-    private AuthenticatingView view;
-    private UserService userService;
+public class RegisterPresenter extends AuthenticationPresenter {
     public RegisterPresenter(AuthenticatingView view) {
-        this.view = view;
-        userService = new UserService();
+        super(view);
     }
     public void register(String firstName, String lastName, String alias, String password,
                          String imageBytesBase64) {
-        userService.register(firstName, lastName, alias, password, imageBytesBase64, new UserServiceObserver());
+        getUserService().register(firstName, lastName, alias, password, imageBytesBase64, new UserServiceObserver());
     }
     public void validateRegistration(EditText firstName, EditText lastName, EditText alias, EditText password, ImageView imageToUpload) {
         if (firstName.getText().length() == 0) {
@@ -39,28 +35,24 @@ public class RegisterPresenter {
         if (password.getText().length() == 0) {
             throw new IllegalArgumentException("Password cannot be empty.");
         }
-
         if (imageToUpload.getDrawable() == null) {
             throw new IllegalArgumentException("Profile image must be uploaded.");
         }
     }
     private class UserServiceObserver implements AuthObserver {
-
         @Override
         public void startIntent(User registeredUser, AuthToken authToken) {
             Cache.getInstance().setCurrUser(registeredUser);
             Cache.getInstance().setCurrUserAuthToken(authToken);
-            view.startActivity(registeredUser, Cache.getInstance().getCurrUser().getName());
+            getView().startViewActivity(registeredUser, Cache.getInstance().getCurrUser().getName());
         }
-
         @Override
         public void handleFailure(String message) {
-            view.displayMessage("Failed to register: " + message);
+            getView().displayMessage("Failed to register: " + message);
         }
-
         @Override
         public void handleException(Exception ex) {
-            view.displayMessage("Failed to register because of exception: " + ex.getMessage());
+            getView().displayMessage("Failed to register because of exception: " + ex.getMessage());
         }
     }
 }

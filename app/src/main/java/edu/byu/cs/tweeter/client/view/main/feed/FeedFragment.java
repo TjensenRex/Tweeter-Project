@@ -106,7 +106,6 @@ public class FeedFragment extends PagedView<Status> {
     public void addItems(List<Status> statuses) {
         feedRecyclerViewAdapter.addItems(statuses);
     }
-
     /**
      * The ViewHolder for the RecyclerView that displays the feed data.
      */

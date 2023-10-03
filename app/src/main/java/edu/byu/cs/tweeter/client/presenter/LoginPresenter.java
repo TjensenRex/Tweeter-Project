@@ -2,23 +2,17 @@ package edu.byu.cs.tweeter.client.presenter;
 
 import android.widget.EditText;
 import edu.byu.cs.tweeter.client.cache.Cache;
-import edu.byu.cs.tweeter.client.model.service.UserService;
 import edu.byu.cs.tweeter.client.model.service.observer.AuthObserver;
 import edu.byu.cs.tweeter.client.presenter.viewInterface.AuthenticatingView;
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
 
-public class LoginPresenter {
-    public interface View {
-    }
-    private AuthenticatingView view;
-    private UserService userService;
+public class LoginPresenter extends AuthenticationPresenter {
     public LoginPresenter(AuthenticatingView view) {
-        this.view = view;
-        userService = new UserService();
+        super(view);
     }
     public void login(String alias, String password) {
-        userService.login(alias, password, new UserServiceObserver());
+        getUserService().login(alias, password, new UserServiceObserver());
     }
     public void validateLogin(EditText alias, EditText password) {
         if (alias.getText().length() > 0 && alias.getText().charAt(0) != '@') {
@@ -37,15 +31,15 @@ public class LoginPresenter {
             // Cache user session information
             Cache.getInstance().setCurrUser(loggedInUser);
             Cache.getInstance().setCurrUserAuthToken(authToken);
-            view.startActivity(loggedInUser, Cache.getInstance().getCurrUser().getName());
+            getView().startViewActivity(loggedInUser, Cache.getInstance().getCurrUser().getName());
         }
         @Override
         public void handleFailure(String message) {
-            view.displayMessage("Failed to login: " + message);
+            getView().displayMessage("Failed to login: " + message);
         }
         @Override
         public void handleException(Exception ex) {
-            view.displayMessage("Failed to login because of exception: " + ex.getMessage());
+            getView().displayMessage("Failed to login because of exception: " + ex.getMessage());
         }
     }
 }

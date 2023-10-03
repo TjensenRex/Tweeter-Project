@@ -49,7 +49,6 @@ public class LoginFragment extends AuthenticatingView {
         presenter = new LoginPresenter(this);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 // Login and move to MainActivity.

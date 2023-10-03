@@ -24,6 +24,8 @@ import edu.byu.cs.tweeter.model.domain.User;
 
 import java.text.ParseException;
 
+import static java.security.AccessController.getContext;
+
 /**
  * The main activity for the application. Contains tabs for feed, story, following, and followers.
  */
@@ -160,11 +162,6 @@ public class MainActivity extends AppCompatActivity implements StatusDialogPrese
             followButton.setTextColor(getResources().getColor(R.color.lightGray));
         }
     }
-
-    @Override
-    public void displayMessage(String message) {
-        Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
-    }
     @Override
     public void logoutSuccess() {
         logOutToast.cancel();
@@ -196,5 +193,10 @@ public class MainActivity extends AppCompatActivity implements StatusDialogPrese
     @Override
     public void handleException(Exception exception) {
         this.displayMessage("Failed to post with exception: " + exception.getMessage());
+    }
+
+    @Override
+    public void displayMessage(String message) {
+        Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
     }
 }

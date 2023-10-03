@@ -89,7 +89,6 @@ public class FollowersFragment extends PagedView<User> {
     public void addItems(List<User> followers) {
         followersRecyclerViewAdapter.addItems(followers);
     }
-
     /**
      * The ViewHolder for the RecyclerView that displays the follower data.
      */

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
@@ -21,6 +22,7 @@ import java.util.Locale;
 
 import edu.byu.cs.tweeter.R;
 import edu.byu.cs.tweeter.client.presenter.StatusDialogPresenter;
+import edu.byu.cs.tweeter.client.view.main.MainActivity;
 
 /**
  * Implements the pop-up dialog for sending a new status.
@@ -96,5 +98,10 @@ public class StatusDialogFragment extends AppCompatDialogFragment implements Sta
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement the StatusDialogFragment.Observer");
         }
+    }
+
+    @Override
+    public void displayMessage(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 }

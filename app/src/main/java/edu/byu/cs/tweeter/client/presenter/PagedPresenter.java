@@ -6,7 +6,7 @@ import edu.byu.cs.tweeter.client.model.service.observer.UserObserver;
 import edu.byu.cs.tweeter.client.presenter.viewInterface.PagedView;
 import edu.byu.cs.tweeter.model.domain.User;
 
-public abstract class PagedPresenter<T> {
+public abstract class PagedPresenter<T> extends BasePresenter {
     protected static final int PAGE_SIZE = 10;
     private T lastItem;
     public T getLastItem() {
@@ -29,23 +29,25 @@ public abstract class PagedPresenter<T> {
     public void setHasMorePages(boolean hasMorePages) {
         this.hasMorePages = hasMorePages;
     }
-    protected PagedView view;
     private UserService userService;
     public UserService getUserService() {
         return userService;
     }
     public PagedPresenter(PagedView pagedView) {
-        this.view = pagedView;
+        super(pagedView);
         userService = new UserService();
     }
+    public PagedView<T> getView() {
+        return (PagedView<T>) super.getView();
+    }
     public void getUser(String userAlias) {
-        getUserService().getUser(Cache.getInstance().getCurrUserAuthToken(), userAlias, new UserObserver(view, this));
-        view.displayMessage("Getting user's profile...");
+        getUserService().getUser(Cache.getInstance().getCurrUserAuthToken(), userAlias, new UserObserver(getView(), this));
+        getView().displayMessage("Getting user's profile...");
     }
     public void loadMoreItems(User user) {
         if (!isLoading()) {   // This guard is important for avoiding a race condition in the scrolling code.
             setLoading(true);
-            view.setLoadingFooter(true);
+            getView().setLoadingFooter(true);
             callService(user);
         }
     }
