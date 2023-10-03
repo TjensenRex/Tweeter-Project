@@ -6,6 +6,8 @@ import edu.byu.cs.tweeter.client.model.service.observer.UserObserver;
 import edu.byu.cs.tweeter.client.presenter.viewInterface.PagedView;
 import edu.byu.cs.tweeter.model.domain.User;
 
+import java.util.List;
+
 public abstract class PagedPresenter<T> extends BasePresenter {
     protected static final int PAGE_SIZE = 10;
     private T lastItem;
@@ -41,7 +43,8 @@ public abstract class PagedPresenter<T> extends BasePresenter {
         return (PagedView<T>) super.getView();
     }
     public void getUser(String userAlias) {
-        getUserService().getUser(Cache.getInstance().getCurrUserAuthToken(), userAlias, new UserObserver(getView(), this));
+        getUserService().getUser(Cache.getInstance().getCurrUserAuthToken(), userAlias,
+                new UserObserver(this, "get user's profile"));
         getView().displayMessage("Getting user's profile...");
     }
     public void loadMoreItems(User user) {
@@ -50,6 +53,23 @@ public abstract class PagedPresenter<T> extends BasePresenter {
             getView().setLoadingFooter(true);
             callService(user);
         }
+    }
+    public void addItems(boolean value, List<T> statuses) {
+        setLoading(false);
+        getView().setLoadingFooter(false);
+        setHasMorePages(value);
+        setLastItem((statuses.size() > 0) ? statuses.get(statuses.size() - 1) : null);
+        getView().addItems(statuses);
+    }
+    public void handleMessage(String message) {
+        setLoading(false);
+        getView().setLoadingFooter(false);
+        getView().displayMessage(message);
+    }
+    public void startActivity(User user) {
+        setLoading(false);
+        getView().setLoadingFooter(false);
+        getView().startActivity(user);
     }
     abstract void callService(User user);
 }

@@ -14,7 +14,7 @@ public class RegisterPresenter extends AuthenticationPresenter {
     }
     public void register(String firstName, String lastName, String alias, String password,
                          String imageBytesBase64) {
-        getUserService().register(firstName, lastName, alias, password, imageBytesBase64, new UserServiceObserver());
+        getUserService().register(firstName, lastName, alias, password, imageBytesBase64, new AuthObserver(this, "register"));
     }
     public void validateRegistration(EditText firstName, EditText lastName, EditText alias, EditText password, ImageView imageToUpload) {
         if (firstName.getText().length() == 0) {
@@ -39,20 +39,7 @@ public class RegisterPresenter extends AuthenticationPresenter {
             throw new IllegalArgumentException("Profile image must be uploaded.");
         }
     }
-    private class UserServiceObserver implements AuthObserver {
-        @Override
-        public void startIntent(User registeredUser, AuthToken authToken) {
-            Cache.getInstance().setCurrUser(registeredUser);
-            Cache.getInstance().setCurrUserAuthToken(authToken);
-            getView().startViewActivity(registeredUser, Cache.getInstance().getCurrUser().getName());
-        }
-        @Override
-        public void handleFailure(String message) {
-            getView().displayMessage("Failed to register: " + message);
-        }
-        @Override
-        public void handleException(Exception ex) {
-            getView().displayMessage("Failed to register because of exception: " + ex.getMessage());
-        }
+    public void startViewActivity(User user) {
+        getView().startViewActivity(user, Cache.getInstance().getCurrUser().getName());
     }
 }

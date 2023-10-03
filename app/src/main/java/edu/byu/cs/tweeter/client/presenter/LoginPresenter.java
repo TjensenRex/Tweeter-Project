@@ -12,7 +12,7 @@ public class LoginPresenter extends AuthenticationPresenter {
         super(view);
     }
     public void login(String alias, String password) {
-        getUserService().login(alias, password, new UserServiceObserver());
+        getUserService().login(alias, password, new AuthObserver(this, "login"));
     }
     public void validateLogin(EditText alias, EditText password) {
         if (alias.getText().length() > 0 && alias.getText().charAt(0) != '@') {
@@ -23,23 +23,6 @@ public class LoginPresenter extends AuthenticationPresenter {
         }
         if (password.getText().length() == 0) {
             throw new IllegalArgumentException("Password cannot be empty.");
-        }
-    }
-    public class UserServiceObserver implements AuthObserver {
-        @Override
-        public void startIntent(User loggedInUser, AuthToken authToken) {
-            // Cache user session information
-            Cache.getInstance().setCurrUser(loggedInUser);
-            Cache.getInstance().setCurrUserAuthToken(authToken);
-            getView().startViewActivity(loggedInUser, Cache.getInstance().getCurrUser().getName());
-        }
-        @Override
-        public void handleFailure(String message) {
-            getView().displayMessage("Failed to login: " + message);
-        }
-        @Override
-        public void handleException(Exception ex) {
-            getView().displayMessage("Failed to login because of exception: " + ex.getMessage());
         }
     }
 }

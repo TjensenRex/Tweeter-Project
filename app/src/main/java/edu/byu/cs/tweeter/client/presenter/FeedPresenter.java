@@ -16,6 +16,6 @@ public class FeedPresenter extends PagedPresenter<Status> {
     @Override
     void callService(User user) {
         feedService.getFeed(Cache.getInstance().getCurrUserAuthToken(), user, PAGE_SIZE, getLastItem(),
-                new ListObserver(getView(), this, "feed"));
+                new ListObserver(this, "get feed"));
     }
 }
