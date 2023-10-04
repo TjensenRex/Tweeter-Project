@@ -1,7 +1,6 @@
-package edu.byu.cs.tweeter.client.model.service.observer;
+package edu.byu.cs.tweeter.client.presenter.observer;
 
 import edu.byu.cs.tweeter.client.presenter.PagedPresenter;
-import edu.byu.cs.tweeter.client.presenter.viewInterface.PagedView;
 
 import java.util.List;
 

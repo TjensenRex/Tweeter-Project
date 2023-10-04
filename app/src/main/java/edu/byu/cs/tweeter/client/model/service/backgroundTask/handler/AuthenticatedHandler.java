@@ -1,8 +1,8 @@
 package edu.byu.cs.tweeter.client.model.service.backgroundTask.handler;
 
 import android.os.Bundle;
-import edu.byu.cs.tweeter.client.model.service.observer.AuthenticatedObserver;
-import edu.byu.cs.tweeter.client.model.service.observer.ServiceObserver;
+import edu.byu.cs.tweeter.client.presenter.observer.AuthenticatedObserver;
+import edu.byu.cs.tweeter.client.presenter.observer.ServiceObserver;
 
 public class AuthenticatedHandler extends BackgroundTaskHandler {
     public AuthenticatedHandler(ServiceObserver observer) {

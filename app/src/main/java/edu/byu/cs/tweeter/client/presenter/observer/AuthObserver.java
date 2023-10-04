@@ -1,8 +1,6 @@
-package edu.byu.cs.tweeter.client.model.service.observer;
+package edu.byu.cs.tweeter.client.presenter.observer;
 
-import edu.byu.cs.tweeter.client.cache.Cache;
 import edu.byu.cs.tweeter.client.presenter.AuthenticationPresenter;
-import edu.byu.cs.tweeter.client.presenter.viewInterface.BaseView;
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
 

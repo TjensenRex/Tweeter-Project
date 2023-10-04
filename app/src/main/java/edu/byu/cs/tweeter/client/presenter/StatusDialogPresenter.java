@@ -2,7 +2,6 @@ package edu.byu.cs.tweeter.client.presenter;
 
 import android.content.Context;
 import edu.byu.cs.tweeter.client.cache.Cache;
-import edu.byu.cs.tweeter.client.model.service.observer.ServiceObserver;
 import edu.byu.cs.tweeter.client.presenter.viewInterface.BaseView;
 
 public class StatusDialogPresenter extends BasePresenter {

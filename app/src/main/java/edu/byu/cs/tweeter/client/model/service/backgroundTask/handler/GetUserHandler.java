@@ -5,7 +5,7 @@ import android.os.Looper;
 import android.os.Message;
 import androidx.annotation.NonNull;
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.GetUserTask;
-import edu.byu.cs.tweeter.client.model.service.observer.UserObserver;
+import edu.byu.cs.tweeter.client.presenter.observer.UserObserver;
 import edu.byu.cs.tweeter.model.domain.User;
 
 /**

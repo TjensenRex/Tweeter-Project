@@ -1,6 +1,6 @@
 package edu.byu.cs.tweeter.client.model.service.backgroundTask.handler;
 
-import edu.byu.cs.tweeter.client.model.service.observer.ToggleFollowObserver;
+import edu.byu.cs.tweeter.client.presenter.observer.ToggleFollowObserver;
 import edu.byu.cs.tweeter.model.domain.User;
 
 public class FollowHandler extends ToggleFollowHandler {

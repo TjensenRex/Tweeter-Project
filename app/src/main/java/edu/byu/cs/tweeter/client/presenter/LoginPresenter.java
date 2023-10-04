@@ -1,11 +1,8 @@
 package edu.byu.cs.tweeter.client.presenter;
 
 import android.widget.EditText;
-import edu.byu.cs.tweeter.client.cache.Cache;
-import edu.byu.cs.tweeter.client.model.service.observer.AuthObserver;
+import edu.byu.cs.tweeter.client.presenter.observer.AuthObserver;
 import edu.byu.cs.tweeter.client.presenter.viewInterface.AuthenticatingView;
-import edu.byu.cs.tweeter.model.domain.AuthToken;
-import edu.byu.cs.tweeter.model.domain.User;
 
 public class LoginPresenter extends AuthenticationPresenter {
     public LoginPresenter(AuthenticatingView view) {

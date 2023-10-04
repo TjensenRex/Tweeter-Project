@@ -4,12 +4,13 @@ import edu.byu.cs.tweeter.client.model.service.backgroundTask.GetUserTask;
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.LoginTask;
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.LogoutTask;
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.RegisterTask;
-import edu.byu.cs.tweeter.client.model.service.backgroundTask.handler.*;
-import edu.byu.cs.tweeter.client.model.service.observer.*;
+import edu.byu.cs.tweeter.client.model.service.backgroundTask.handler.AuthenticatedHandler;
+import edu.byu.cs.tweeter.client.model.service.backgroundTask.handler.AuthenticatingHandler;
+import edu.byu.cs.tweeter.client.model.service.backgroundTask.handler.GetUserHandler;
+import edu.byu.cs.tweeter.client.presenter.observer.AuthObserver;
+import edu.byu.cs.tweeter.client.presenter.observer.AuthenticatedObserver;
+import edu.byu.cs.tweeter.client.presenter.observer.UserObserver;
 import edu.byu.cs.tweeter.model.domain.AuthToken;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class UserService extends BaseService {
     public void login(String alias, String password, AuthObserver observer) {

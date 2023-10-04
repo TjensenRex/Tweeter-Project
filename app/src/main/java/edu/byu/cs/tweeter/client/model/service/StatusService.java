@@ -5,14 +5,11 @@ import edu.byu.cs.tweeter.client.model.service.backgroundTask.GetStoryTask;
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.PostStatusTask;
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.handler.AuthenticatedHandler;
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.handler.GetListHandler;
-import edu.byu.cs.tweeter.client.model.service.observer.AuthenticatedObserver;
-import edu.byu.cs.tweeter.client.model.service.observer.ListObserver;
+import edu.byu.cs.tweeter.client.presenter.observer.AuthenticatedObserver;
+import edu.byu.cs.tweeter.client.presenter.observer.ListObserver;
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.Status;
 import edu.byu.cs.tweeter.model.domain.User;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class StatusService extends BaseService {
     public void getFeed(AuthToken currUserAuthToken, User user, int pageSize, Status lastStatus,

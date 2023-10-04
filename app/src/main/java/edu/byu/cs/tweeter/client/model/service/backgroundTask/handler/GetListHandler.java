@@ -2,9 +2,8 @@ package edu.byu.cs.tweeter.client.model.service.backgroundTask.handler;
 
 import android.os.Bundle;
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.GetFollowersTask;
-import edu.byu.cs.tweeter.client.model.service.observer.ListObserver;
-import edu.byu.cs.tweeter.client.model.service.observer.ServiceObserver;
-import edu.byu.cs.tweeter.model.domain.User;
+import edu.byu.cs.tweeter.client.presenter.observer.ListObserver;
+import edu.byu.cs.tweeter.client.presenter.observer.ServiceObserver;
 
 import java.util.List;
 
