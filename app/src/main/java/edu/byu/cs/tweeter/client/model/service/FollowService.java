@@ -2,8 +2,13 @@ package edu.byu.cs.tweeter.client.model.service;
 
 import edu.byu.cs.tweeter.client.cache.Cache;
 import edu.byu.cs.tweeter.client.model.service.backgroundTask.*;
-import edu.byu.cs.tweeter.client.model.service.backgroundTask.handler.*;
-import edu.byu.cs.tweeter.client.model.service.observer.*;
+import edu.byu.cs.tweeter.client.model.service.backgroundTask.handler.FollowHandler;
+import edu.byu.cs.tweeter.client.model.service.backgroundTask.handler.GetCountHandler;
+import edu.byu.cs.tweeter.client.model.service.backgroundTask.handler.IsFollowerHandler;
+import edu.byu.cs.tweeter.client.model.service.backgroundTask.handler.UnfollowHandler;
+import edu.byu.cs.tweeter.client.presenter.observer.GetCountObserver;
+import edu.byu.cs.tweeter.client.presenter.observer.IsFollowerObserver;
+import edu.byu.cs.tweeter.client.presenter.observer.ToggleFollowObserver;
 import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
 
@@ -16,17 +21,8 @@ public class FollowService extends BaseService {
                 new UnfollowHandler(observer, selectedUser));
         executeTask(unfollowTask);
     }
-    public void loadMoreItems(AuthToken currUserAuthToken, User user, int pageSize, User lastFollowee,
-                              ListObserver<User> observer) {
-        GetFollowingTask getFollowingTask = new GetFollowingTask(currUserAuthToken, user, pageSize, lastFollowee,
-                new GetListHandler<User>(observer));
-        executeTask(getFollowingTask);
-    }
-    public void loadFollowers(AuthToken currUserAuthToken, User user, int pageSize, User lastFollower,
-                              ListObserver<User> observer) {
-        GetFollowersTask getFollowersTask = new GetFollowersTask(currUserAuthToken, user, pageSize, lastFollower,
-                new GetListHandler<User>(observer));
-        executeTask(getFollowersTask);
+    public void loadMoreItems(BackgroundTask task) {
+        executeTask(task);
     }
     public void isFollower(AuthToken currUserAuthToken, User currUser, User selectedUser, IsFollowerObserver observer) {
         IsFollowerTask isFollowerTask = new IsFollowerTask(currUserAuthToken, currUser, selectedUser,

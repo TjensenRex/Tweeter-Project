@@ -2,8 +2,11 @@ package edu.byu.cs.tweeter.client.presenter;
 
 import edu.byu.cs.tweeter.client.cache.Cache;
 import edu.byu.cs.tweeter.client.model.service.FollowService;
-import edu.byu.cs.tweeter.client.model.service.observer.ListObserver;
+import edu.byu.cs.tweeter.client.model.service.backgroundTask.GetFollowingTask;
+import edu.byu.cs.tweeter.client.model.service.backgroundTask.handler.GetListHandler;
+import edu.byu.cs.tweeter.client.presenter.observer.ListObserver;
 import edu.byu.cs.tweeter.client.presenter.viewInterface.PagedView;
+import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
 
 public class FollowingPresenter extends PagedPresenter<User> {
@@ -14,7 +17,8 @@ public class FollowingPresenter extends PagedPresenter<User> {
     }
     @Override
     void callService(User user) {
-        followService.loadMoreItems(Cache.getInstance().getCurrUserAuthToken(),
-                user, PAGE_SIZE, getLastItem(), new ListObserver(this, "get following"));
+        AuthToken currUserAuthToken = Cache.getInstance().getCurrUserAuthToken();
+        followService.loadMoreItems(new GetFollowingTask(currUserAuthToken, user, PAGE_SIZE, getLastItem(),
+                        new GetListHandler<User>(new ListObserver(this, "get following"))));
     }
 }

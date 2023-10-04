@@ -23,7 +23,4 @@ public class AuthenticationPresenter extends BasePresenter {
         Cache.getInstance().setCurrUserAuthToken(authToken);
         getView().startViewActivity(user, Cache.getInstance().getCurrUser().getName());
     }
-    public void displayMessage(String message) {
-        getView().displayMessage(message);
-    }
 }

@@ -2,7 +2,7 @@ package edu.byu.cs.tweeter.client.presenter;
 
 import edu.byu.cs.tweeter.client.cache.Cache;
 import edu.byu.cs.tweeter.client.model.service.UserService;
-import edu.byu.cs.tweeter.client.model.service.observer.UserObserver;
+import edu.byu.cs.tweeter.client.presenter.observer.UserObserver;
 import edu.byu.cs.tweeter.client.presenter.viewInterface.PagedView;
 import edu.byu.cs.tweeter.model.domain.User;
 
@@ -60,11 +60,6 @@ public abstract class PagedPresenter<T> extends BasePresenter {
         setHasMorePages(value);
         setLastItem((statuses.size() > 0) ? statuses.get(statuses.size() - 1) : null);
         getView().addItems(statuses);
-    }
-    public void handleMessage(String message) {
-        setLoading(false);
-        getView().setLoadingFooter(false);
-        getView().displayMessage(message);
     }
     public void startActivity(User user) {
         setLoading(false);
