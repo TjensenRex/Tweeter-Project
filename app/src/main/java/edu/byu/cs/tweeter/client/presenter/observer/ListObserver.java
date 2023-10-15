@@ -12,7 +12,7 @@ public class ListObserver<T> extends ServiceObserver {
         getPresenter().addItems(hasMorePages, statuses);
     }
     @Override
-    public PagedPresenter<T> getPresenter() {
+    protected PagedPresenter<T> getPresenter() {
         return (PagedPresenter<T>) super.getPresenter();
     }
 }

@@ -11,7 +11,10 @@ public class StoryPresenter extends PagedPresenter<Status> {
     private StatusService statusService;
     public StoryPresenter(PagedView<Status> view) {
         super(view);
-        statusService = new StatusService();
+        statusService = getStatusService();
+    }
+    private StatusService getStatusService() {
+        return new StatusService();
     }
     @Override
     void callService(User user) {

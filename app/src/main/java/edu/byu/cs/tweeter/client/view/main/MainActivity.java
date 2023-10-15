@@ -136,9 +136,12 @@ public class MainActivity extends AppCompatActivity implements StatusDialogPrese
     }
     @Override
     public void onStatusPosted(String post) {
+        presenter.post(post);
+    }
+    @Override
+    public void showPostToast() {
         postingToast = Toast.makeText(this, "Posting Status...", Toast.LENGTH_LONG);
         postingToast.show();
-        presenter.post(post);
     }
     public String getFormattedDateTime() throws ParseException {
         return presenter.getFormattedDateTime();
@@ -184,11 +187,11 @@ public class MainActivity extends AppCompatActivity implements StatusDialogPrese
     public void displayMessage(String message) {
         Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
     }
-    private class PostObserver implements StatusDialogPresenter.StatusDialogueObserver {
+    /*private class PostObserver implements StatusDialogPresenter.StatusDialogueObserver {
 
         @Override
         public void onStatusPosted(String post) {
 
         }
-    }
+    }*/
 }

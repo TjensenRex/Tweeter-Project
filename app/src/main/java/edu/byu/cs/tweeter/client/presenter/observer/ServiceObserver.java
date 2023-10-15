@@ -4,7 +4,7 @@ import edu.byu.cs.tweeter.client.presenter.BasePresenter;
 
 public class ServiceObserver {
     private BasePresenter presenter;
-    public BasePresenter getPresenter() {
+    protected BasePresenter getPresenter() {
         return presenter;
     }
 

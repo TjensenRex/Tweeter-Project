@@ -10,7 +10,7 @@ public class UserObserver<T> extends ServiceObserver {
     public void startActivity(User user) {
         getPresenter().startActivity(user);
     }
-    public PagedPresenter<T> getPresenter() {
+    protected PagedPresenter<T> getPresenter() {
         return (PagedPresenter<T>) super.getPresenter();
     }
 }

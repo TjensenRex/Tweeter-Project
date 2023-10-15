@@ -12,7 +12,7 @@ public class AuthObserver extends ServiceObserver {
         getPresenter().startViewActivity(registeredUser, authToken);
     }
     @Override
-    public AuthenticationPresenter getPresenter() {
+    protected AuthenticationPresenter getPresenter() {
         return (AuthenticationPresenter) super.getPresenter();
     }
 }

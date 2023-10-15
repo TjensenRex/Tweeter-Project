@@ -57,7 +57,6 @@ public class StoryFragment extends PagedView<Status> {
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -79,7 +78,6 @@ public class StoryFragment extends PagedView<Status> {
 
         return view;
     }
-
     @Override
     public void setLoadingFooter(boolean value) {
         if (value) {

@@ -27,6 +27,7 @@ public class MainActivityPresenter extends BasePresenter {
         void setFollowerCount(int count);
         void setFollowingCount(int count);
         void setFollowButton(boolean value);
+        public void showPostToast();
         void postSuccess();
     }
     private static final String LOG_TAG = "MainActivity";
@@ -37,7 +38,12 @@ public class MainActivityPresenter extends BasePresenter {
         super(v);
         followService = new FollowService();
         userService = new UserService();
-        statusService = new StatusService();
+    }
+    protected StatusService getStatusService() {
+        if (statusService == null) {
+            statusService = new StatusService();
+        }
+        return statusService;
     }
     @Override
     public MainView getView() {
@@ -68,18 +74,19 @@ public class MainActivityPresenter extends BasePresenter {
         getView().displayMessage("Removing " + selectedUser.getName() + "...");
     }
     public void post(String post) {
+        getView().showPostToast();
         List<String> urls = parseURLs(post);
         List<String> mentions = parseMentions(post);
-        try{
+        //try{
             Status newStatus = new Status(post, Cache.getInstance().getCurrUser(), System.currentTimeMillis(),
                     urls, mentions);
 
-        statusService.post(Cache.getInstance().getCurrUserAuthToken(), newStatus,
+        getStatusService().post(Cache.getInstance().getCurrUserAuthToken(), newStatus,
                 new PostObserver(this, "post status"));
-        } catch (Exception ex) {
-            Log.e(LOG_TAG, ex.getMessage(), ex);
-            getView().displayMessage("Failed to post the status because of exception: " + ex.getMessage());
-        }
+        //} catch (Exception ex) {
+        //    Log.e(LOG_TAG, ex.getMessage(), ex);
+          //  getView().displayMessage("Failed to post the status because of exception: " + ex.getMessage());
+        //}
     }
     public List<String> parseMentions(String post) {
         List<String> containedMentions = new ArrayList<>();
@@ -197,7 +204,7 @@ public class MainActivityPresenter extends BasePresenter {
             getView().setFollowButton(value);
         }
     }
-    private class PostObserver extends AuthenticatedObserver {
+    class PostObserver extends AuthenticatedObserver {
         public PostObserver(BasePresenter presenter, String verb) {
             super(presenter, verb);
         }

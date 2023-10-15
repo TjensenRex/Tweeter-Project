@@ -10,7 +10,7 @@ public class StatusDialogPresenter extends BasePresenter {
     }
     public interface View extends BaseView { // kept to match the pattern in the others
     }
-    private StatusDialogueObserver observer;
+    private StatusDialogueObserver statusObserver;
     public StatusDialogPresenter(BaseView v) {
         super(v);
     }
@@ -24,9 +24,9 @@ public class StatusDialogPresenter extends BasePresenter {
         return Cache.getInstance().getCurrUser().getImageUrl();
     }
     public void setObserver(Context context) {
-        observer = (StatusDialogueObserver) context;
+        statusObserver = (StatusDialogueObserver) context;
     }
     public void postStatus(String post) {
-        observer.onStatusPosted(post);
+        statusObserver.onStatusPosted(post);
     }
 }
