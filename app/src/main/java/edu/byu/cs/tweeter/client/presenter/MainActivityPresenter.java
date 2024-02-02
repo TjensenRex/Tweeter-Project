@@ -27,12 +27,12 @@ public class MainActivityPresenter extends BasePresenter {
         void setFollowerCount(int count);
         void setFollowingCount(int count);
         void setFollowButton(boolean value);
-        public void showPostToast();
+        void showPostToast();
         void postSuccess();
     }
     private static final String LOG_TAG = "MainActivity";
-    private FollowService followService;
-    private UserService userService;
+    private final FollowService followService;
+    private final UserService userService;
     private StatusService statusService;
     public MainActivityPresenter(MainView v) {
         super(v);

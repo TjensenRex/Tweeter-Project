@@ -3,7 +3,6 @@ package edu.byu.cs.tweeter.client.model.service.backgroundTask;
 import android.os.Bundle;
 import android.os.Handler;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -34,10 +33,18 @@ public abstract class PagedTask<T> extends AuthenticatedTask {
      */
     private final T lastItem;
 
+    public List<T> getItems() {
+        return items;
+    }
+
     /**
      * The items returned in the current page of results.
      */
     private List<T> items;
+
+    public boolean getHasMorePages() {
+        return hasMorePages;
+    }
 
     /**
      * Indicates whether there are more pages of items that can be retrieved on subsequent calls.
@@ -50,7 +57,12 @@ public abstract class PagedTask<T> extends AuthenticatedTask {
         this.limit = limit;
         this.lastItem = lastItem;
     }
-
+    public void setItems(List<T> items) {
+        this.items = items;
+    }
+    public void setHasMorePages(boolean hasMorePages) {
+        this.hasMorePages = hasMorePages;
+    }
     protected User getTargetUser() {
         return targetUser;
     }
@@ -64,8 +76,8 @@ public abstract class PagedTask<T> extends AuthenticatedTask {
     }
 
     @Override
-    protected final void runTask() throws IOException {
-        Pair<List<T>, Boolean> pageOfItems = getItems();
+    protected void runTask() {
+        Pair<List<T>, Boolean> pageOfItems = queryItems();
 
         items = pageOfItems.getFirst();
         hasMorePages = pageOfItems.getSecond();
@@ -76,12 +88,14 @@ public abstract class PagedTask<T> extends AuthenticatedTask {
         // sendFailedMessage()
     }
 
-    protected abstract Pair<List<T>, Boolean> getItems();
+    protected Pair<List<T>, Boolean> queryItems() {
+        return new Pair<>(items, hasMorePages);
+    }
 
     protected abstract List<User> getUsersForItems(List<T> items);
 
     @Override
-    protected final void loadSuccessBundle(Bundle msgBundle) {
+    protected void loadSuccessBundle(Bundle msgBundle) {
         msgBundle.putSerializable(ITEMS_KEY, (Serializable) items);
         msgBundle.putBoolean(MORE_PAGES_KEY, hasMorePages);
     }

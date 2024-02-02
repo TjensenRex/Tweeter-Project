@@ -12,7 +12,7 @@ import edu.byu.cs.tweeter.model.domain.User;
  * Message handler (i.e., observer) for GetUserTask.
  */
 public class GetUserHandler extends Handler {
-    private UserObserver observer;
+    private final UserObserver observer;
 
     public GetUserHandler(UserObserver observer) {
         super(Looper.getMainLooper());

@@ -9,7 +9,7 @@ import edu.byu.cs.tweeter.client.presenter.viewInterface.PagedView;
 import edu.byu.cs.tweeter.model.domain.User;
 
 public class FollowersPresenter extends PagedPresenter<User> {
-    private FollowService followService;
+    private final FollowService followService;
     public FollowersPresenter(PagedView<User> v) {
         super(v);
         followService = new FollowService();

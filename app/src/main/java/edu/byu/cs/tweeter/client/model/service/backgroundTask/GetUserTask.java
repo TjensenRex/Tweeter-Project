@@ -3,8 +3,20 @@ package edu.byu.cs.tweeter.client.model.service.backgroundTask;
 import android.os.Bundle;
 import android.os.Handler;
 
+import android.util.Log;
+import edu.byu.cs.tweeter.client.model.service.StatusService;
+import edu.byu.cs.tweeter.client.model.service.UserService;
 import edu.byu.cs.tweeter.model.domain.AuthToken;
+import edu.byu.cs.tweeter.model.domain.Status;
 import edu.byu.cs.tweeter.model.domain.User;
+import edu.byu.cs.tweeter.model.net.TweeterRemoteException;
+import edu.byu.cs.tweeter.model.net.request.GetUserRequest;
+import edu.byu.cs.tweeter.model.net.request.StatusesRequest;
+import edu.byu.cs.tweeter.model.net.response.GetUserResponse;
+import edu.byu.cs.tweeter.model.net.response.StatusesResponse;
+import edu.byu.cs.tweeter.util.Pair;
+
+import java.io.IOException;
 
 /**
  * Background task that returns the profile for a specified user.
@@ -12,6 +24,7 @@ import edu.byu.cs.tweeter.model.domain.User;
 public class GetUserTask extends AuthenticatedTask {
 
     public static final String USER_KEY = "user";
+    public static final String LOG_TAG = "GetUserTask";
 
     /**
      * Alias (or handle) for user whose profile is being retrieved.
@@ -29,10 +42,12 @@ public class GetUserTask extends AuthenticatedTask {
     protected void runTask() {
         user = getUser();
 
-        // Call sendSuccessMessage if successful
-        sendSuccessMessage();
-        // or call sendFailedMessage if not successful
-        // sendFailedMessage()
+        if (user == null) {
+            sendFailedMessage("failed to get user.");
+        }
+        else {
+            sendSuccessMessage();
+        }
     }
 
     @Override
@@ -41,6 +56,19 @@ public class GetUserTask extends AuthenticatedTask {
     }
 
     private User getUser() {
-        return getFakeData().findUserByAlias(alias);
+        try {
+            GetUserRequest request = new GetUserRequest(alias, getAuthToken());
+            GetUserResponse response = getServerFacade().getUser(request, UserService.GETUSER_URL_PATH);
+
+            if (response.isSuccess()) {
+                return response.getUser();
+            } else {
+                sendFailedMessage(response.getMessage());
+            }
+        } catch (IOException | TweeterRemoteException ex) {
+            Log.e(LOG_TAG, "Failed to get user", ex);
+            sendExceptionMessage(ex);
+        }
+        return null;
     }
 }

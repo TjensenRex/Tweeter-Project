@@ -3,7 +3,7 @@ package edu.byu.cs.tweeter.client.presenter.observer;
 import edu.byu.cs.tweeter.client.presenter.BasePresenter;
 
 public class ServiceObserver {
-    private BasePresenter presenter;
+    private final BasePresenter presenter;
     protected BasePresenter getPresenter() {
         return presenter;
     }
@@ -12,7 +12,7 @@ public class ServiceObserver {
         return verb;
     }
 
-    private String verb;
+    private final String verb;
     public ServiceObserver(BasePresenter presenter, String verb) {
         this.presenter = presenter;
         this.verb = verb;

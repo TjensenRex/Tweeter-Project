@@ -14,10 +14,6 @@ public class IsFollowerHandler extends BackgroundTaskHandler {
         boolean isFollower = data.getBoolean(IsFollowerTask.IS_FOLLOWER_KEY);
         IsFollowerObserver obs = (IsFollowerObserver) observer;
         // If logged in user if a follower of the selected user, display the follow button as "following"
-        if (isFollower) {
-            obs.updateFollowButton(false);
-        } else {
-            obs.updateFollowButton(true);
-        }
+        obs.updateFollowButton(!isFollower);
     }
 }

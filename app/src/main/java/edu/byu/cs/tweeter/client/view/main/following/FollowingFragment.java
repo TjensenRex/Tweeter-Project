@@ -1,6 +1,5 @@
 package edu.byu.cs.tweeter.client.view.main.following;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -9,16 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 import edu.byu.cs.tweeter.R;
 import edu.byu.cs.tweeter.client.presenter.FollowingPresenter;
 import edu.byu.cs.tweeter.client.presenter.viewInterface.PagedView;
-import edu.byu.cs.tweeter.client.view.main.MainActivity;
 import edu.byu.cs.tweeter.model.domain.User;
 import org.jetbrains.annotations.NotNull;
 
@@ -72,7 +68,7 @@ public class FollowingFragment extends PagedView<User> {
 
         followingRecyclerView.addOnScrollListener(new FollowRecyclerViewPaginationScrollListener(layoutManager));
         presenter = new FollowingPresenter(this);
-        followingRecyclerViewAdapter.loadMoreItems();
+        presenter.loadMoreItems(user);
 
         return view;
     }

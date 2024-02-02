@@ -10,7 +10,7 @@ import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
 
 public class FollowingPresenter extends PagedPresenter<User> {
-    private FollowService followService;
+    private final FollowService followService;
     public FollowingPresenter(PagedView v) {
         super(v);
         this.followService = new FollowService();
@@ -19,6 +19,13 @@ public class FollowingPresenter extends PagedPresenter<User> {
     void callService(User user) {
         AuthToken currUserAuthToken = Cache.getInstance().getCurrUserAuthToken();
         followService.loadMoreItems(new GetFollowingTask(currUserAuthToken, user, PAGE_SIZE, getLastItem(),
-                        new GetListHandler<User>(new ListObserver(this, "get following"))));
+                new GetListHandler<User>(new ListObserver(this, "get following"))));
+    }
+
+    public FollowService getFollowingService() {
+        if (followService == null) {
+            return new FollowService();
+        }
+        return followService;
     }
 }

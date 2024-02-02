@@ -96,7 +96,7 @@ public class StatusDialogFragment extends AppCompatDialogFragment implements Sta
             presenter = new StatusDialogPresenter(this);
             presenter.setObserver(context);
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement the StatusDialogFragment.Observer");
+            throw new ClassCastException(context + " must implement the StatusDialogFragment.Observer");
         }
     }
 

@@ -31,7 +31,7 @@ public abstract class PagedPresenter<T> extends BasePresenter {
     public void setHasMorePages(boolean hasMorePages) {
         this.hasMorePages = hasMorePages;
     }
-    private UserService userService;
+    private final UserService userService;
     public UserService getUserService() {
         return userService;
     }
@@ -54,12 +54,12 @@ public abstract class PagedPresenter<T> extends BasePresenter {
             callService(user);
         }
     }
-    public void addItems(boolean value, List<T> statuses) {
+    public void addItems(boolean value, List<T> items) {
         setLoading(false);
         getView().setLoadingFooter(false);
         setHasMorePages(value);
-        setLastItem((statuses.size() > 0) ? statuses.get(statuses.size() - 1) : null);
-        getView().addItems(statuses);
+        setLastItem((items.size() > 0) ? items.get(items.size() - 1) : null);
+        getView().addItems(items);
     }
     public void startActivity(User user) {
         setLoading(false);

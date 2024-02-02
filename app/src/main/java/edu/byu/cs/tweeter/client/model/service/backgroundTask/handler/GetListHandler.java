@@ -14,8 +14,8 @@ public class GetListHandler<T> extends BackgroundTaskHandler {
     @Override
     protected void handleSuccessMessage(ServiceObserver observer, Bundle data) {
         ListObserver<T> obs = (ListObserver<T>) observer;
-        List<T> followers = (List<T>) data.getSerializable(GetFollowersTask.ITEMS_KEY);
+        List<T> items = (List<T>) data.getSerializable(GetFollowersTask.ITEMS_KEY);
         boolean hasMorePages = data.getBoolean(GetFollowersTask.MORE_PAGES_KEY);
-        obs.addItems(hasMorePages, followers);
+        obs.addItems(hasMorePages, items);
     }
 }

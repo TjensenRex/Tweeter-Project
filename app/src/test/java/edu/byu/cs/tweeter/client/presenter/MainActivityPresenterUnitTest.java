@@ -39,10 +39,9 @@ public class MainActivityPresenterUnitTest {
     }
     @Test
     public void testPost_showToast() {
-        return;
     }
     private class StatusMatch implements ArgumentMatcher<Status> {
-        private String post;
+        private final String post;
         public StatusMatch(String post) {
             this.post = post;
         }

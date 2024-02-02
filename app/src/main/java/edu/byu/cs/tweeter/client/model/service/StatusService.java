@@ -12,6 +12,11 @@ import edu.byu.cs.tweeter.model.domain.Status;
 import edu.byu.cs.tweeter.model.domain.User;
 
 public class StatusService extends BaseService {
+
+    public static final String GETSTORY_URL_PATH = "/getstory";
+    public static final String GETFEED_URL_PATH = "/getfeed";
+    public static final String POST_STATUS_URL = "poststatus";
+
     public void getFeed(AuthToken currUserAuthToken, User user, int pageSize, Status lastStatus,
                         ListObserver<Status> observer) {
         GetFeedTask getFeedTask = new GetFeedTask(currUserAuthToken, user, pageSize, lastStatus,

@@ -8,7 +8,7 @@ import edu.byu.cs.tweeter.client.presenter.observer.ToggleFollowObserver;
 import edu.byu.cs.tweeter.model.domain.User;
 
 public abstract class ToggleFollowHandler extends BackgroundTaskHandler {
-    private User selectedUser;
+    private final User selectedUser;
     public User getSelectedUser() {
         return selectedUser;
     }

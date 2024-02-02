@@ -7,7 +7,7 @@ import edu.byu.cs.tweeter.model.domain.AuthToken;
 import edu.byu.cs.tweeter.model.domain.User;
 
 public class AuthenticationPresenter extends BasePresenter {
-    private UserService userService;
+    private final UserService userService;
     public UserService getUserService() {
         return userService;
     }

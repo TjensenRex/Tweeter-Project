@@ -8,7 +8,7 @@ import edu.byu.cs.tweeter.model.domain.Status;
 import edu.byu.cs.tweeter.model.domain.User;
 
 public class FeedPresenter extends PagedPresenter<Status> {
-    private StatusService feedService;
+    private final StatusService feedService;
     public FeedPresenter(PagedView<Status> view) {
         super(view);
         feedService = new StatusService();
